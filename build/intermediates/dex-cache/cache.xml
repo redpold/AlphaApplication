@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="true"
+        jar="/Users/chenyi/AndroidStudioProjects/AlphaApplication/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="3be78ebc2706b2e1fe2f12d5726887a92d6c183b">
+        <dex dex="/Users/chenyi/AndroidStudioProjects/AlphaApplication/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_2858955ea9eff4004f060dc60fdd7d81bf78886f/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/chenyi/AndroidStudioProjects/AlphaApplication/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="335e6181e227457d9bbf1cff2605c1dc51fa355e">
+        <dex dex="/Users/chenyi/AndroidStudioProjects/AlphaApplication/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_8466672c35e4cfb6de5fde7417630ab39752c989/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/chenyi/.android/build-cache/c773c638b3d393095efbff09aabc16b93abe7428/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="38789e20ace9ab7dbd00554bd2673ab424478d3b">
+        <dex dex="/Users/chenyi/AndroidStudioProjects/AlphaApplication/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_a9389544e3ba87a4e4c2e49ee9fc68495a72b553/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/chenyi/.android/build-cache/f242c4f77b6b3ceabdb1276624747c6dab18a513/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="d4cf6227dd6a2ceff0f7dcf0c324380b7abf2c28">
+        <dex dex="/Users/chenyi/AndroidStudioProjects/AlphaApplication/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_3f5fee78167f1368d8f2b12ed301050cdf95b5b4/classes.dex" />
+    </item>
+
+</items>
