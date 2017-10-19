@@ -1,28 +1,19 @@
 package com.cqcet.a11501.projectalpha.alphaapplication;
 
+import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.AppBarLayout.OnOffsetChangedListener;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 
-import java.util.ArrayList;
-
-public class MainActivity extends AppCompatActivity {
-
-    private TabLayout mTabLayout;
-    private ViewPager mViewPager;
-    private LayoutInflater mInflater;
-
-    private ArrayList<String> mTitles = new ArrayList<>();//页卡标题集合
-    private View view1, view2;
-    private ArrayList<View> mViewList = new ArrayList<>();//页卡视图集合
+public class MainActivity extends AppCompatActivity implements OnOffsetChangedListener {
+    private final static String TAG = "MainActivity";
+    private AppBarLayout abl_bar;
+    private View tl_expand, tl_collapse;
+    private View v_expand_mask, v_collapse_mask, v_pay_mask;
+    private int mMaskColor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,89 +21,41 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        //去掉标题
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        mMaskColor = getResources().getColor(R.color.blue_dark);
 
 
-        mViewPager = (ViewPager) findViewById(R.id.viewpager);
-        mTabLayout = (TabLayout) findViewById(R.id.tablayout);
-        mInflater = LayoutInflater.from(this);
-        view1 = mInflater.inflate(R.layout.item_view, null);
-        view2 = mInflater.inflate(R.layout.item_view, null);
-        //添加到View集合
-        mViewList.add(view1);
-        mViewList.add(view2);
-
-        //添加标题集合
-        mTitles.add("第一");
-        mTitles.add("第二");
-
-        mTabLayout.setTabMode(TabLayout.MODE_FIXED);//设置tab模式，当前为系统默认模式
-        mTabLayout.addTab(mTabLayout.newTab().setText(mTitles.get(0)));//添加tab选项卡
-        mTabLayout.addTab(mTabLayout.newTab().setText(mTitles.get(1)));
-
-        MyPagerAdapter mAdapter = new MyPagerAdapter(mViewList);
-        mViewPager.setAdapter(mAdapter);//给ViewPager设置适配器
-        mTabLayout.setupWithViewPager(mViewPager);//将TabLayout和ViewPager关联起来。
-        //mTabLayout.setTabsFromPagerAdapter(mAdapter);//给Tabs设置适配器
-    }
-
-
-    class MyPagerAdapter extends PagerAdapter {
-        private ArrayList<View> mViewList;
-
-        public MyPagerAdapter(ArrayList<View> mViewList) {
-            this.mViewList = mViewList;
-        }
-
-        @Override
-        public int getCount() {
-            return mViewList.size();
-        }
-
-        @Override
-        public boolean isViewFromObject(View view, Object object) {
-            return view == object;
-        }
-
-        @Override
-        public Object instantiateItem(ViewGroup container, int position) {
-            container.addView(mViewList.get(position));
-            return mViewList.get(position);
-        }
-
-        @Override
-        public void destroyItem(ViewGroup container, int position, Object object) {
-            container.removeView(mViewList.get(position));
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return mTitles.get(position);
-        }
-
+        abl_bar = (AppBarLayout) findViewById(R.id.abl_bar);
+        tl_expand = (View) findViewById(R.id.tl_expand);
+        tl_collapse = (View) findViewById(R.id.tl_collapse);
+        v_expand_mask = (View) findViewById(R.id.v_expand_mask);
+        v_collapse_mask = (View) findViewById(R.id.v_collapse_mask);
+        v_pay_mask = (View) findViewById(R.id.v_pay_mask);
+        abl_bar.addOnOffsetChangedListener(this);
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_scrolling, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+    public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+        Log.d(TAG, "verticalOffset="+verticalOffset);
+        int offset = Math.abs(verticalOffset);
+        int total = appBarLayout.getTotalScrollRange();
+        int alphaIn = offset;
+        int alphaOut = (200-offset)<0?0:200-offset;
+        int maskColorIn = Color.argb(alphaIn, Color.red(mMaskColor),
+                Color.green(mMaskColor), Color.blue(mMaskColor));
+        int maskColorInDouble = Color.argb(alphaIn*2, Color.red(mMaskColor),
+                Color.green(mMaskColor), Color.blue(mMaskColor));
+        int maskColorOut = Color.argb(alphaOut*2, Color.red(mMaskColor),
+                Color.green(mMaskColor), Color.blue(mMaskColor));
+        if (offset <= total / 2) {
+            tl_expand.setVisibility(View.VISIBLE);
+            tl_collapse.setVisibility(View.GONE);
+            v_expand_mask.setBackgroundColor(maskColorInDouble);
+        } else {
+            tl_expand.setVisibility(View.GONE);
+            tl_collapse.setVisibility(View.VISIBLE);
+            v_collapse_mask.setBackgroundColor(maskColorOut);
         }
-        return super.onOptionsItemSelected(item);
+        v_pay_mask.setBackgroundColor(maskColorIn);
     }
+
 }
